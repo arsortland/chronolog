@@ -1,36 +1,38 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ChronoLog
 
-## Getting Started
+A terminal-aesthetic time tracking app for consultants. Log hours against WBS/WO codes, track billable vs. non-billable time, and review your history — all in a hacker-green-on-dark UI.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Dashboard** — Log time entries for today, view a current-week daily breakdown, and see a previous-week summary. Stats show hours logged today, hours this week, and your weekly billing rate.
+- **History** — Browse all entries with quick-select period filters (Today, This Week, Last Week, This Month, Last Month) and a manual date range. Filterable by billed/unbilled status with summary totals.
+- **Codes** — Manage your WBS/WO project codes. Give each one a customer name and code identifier that auto-populates when selected in the time entry form.
+- **Auth** — Email/password sign-in, registration, and an inline forgot-password flow via Firebase Auth. Each user's data is private to their account.
+- **Dark / light theme** — Toggleable, persisted to `localStorage`.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Layer | Technology |
+|---|---|
+| Framework | [Next.js 16](https://nextjs.org) (App Router) |
+| Language | TypeScript |
+| Styling | Tailwind CSS v4 + CSS custom properties |
+| Font | JetBrains Mono |
+| Auth & Database | Firebase Auth + Firestore |
+| Date utilities | date-fns |
+| Icons | lucide-react |
+| Hosting | Vercel |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Live App
 
-## Learn More
+Available at **[chronolog.vercel.app](https://chronolog.vercel.app)**
 
-To learn more about Next.js, take a look at the following resources:
+## How to Use
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **Register** — Create an account on the register page with your name, email, and password.
+2. **Add codes** — Go to **Codes** and create your WBS/WO project codes. Give each one a customer name and code identifier. These will appear as options in the time entry form.
+3. **Log time** — On the **Dashboard**, use the form at the top to log a time entry. Select a date, pick a project code (or use COMP for compensatory time), enter hours, and optionally add a note.
+4. **Mark as billed** — Toggle the billed status on any entry once you've invoiced it.
+5. **Review history** — Go to **History** to search and filter all your entries by period or date range. The summary shows total hours and your billing rate for the active filter.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
