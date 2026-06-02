@@ -5,6 +5,7 @@
 // v2.3 - Add "Last Week" period filter button
 // v2.4 - Add "Last Month" period filter button
 // v2.5 - Add search, customer filter, code filter, and hours breakdown by customer/code
+// v2.6 - Swap native date inputs for themed DatePicker; fix billing rate threshold to 70%
 // Purpose: History page. Shows all time entries with filters for billed/unbilled status,
 //          period quick-select (today/week/month), manual date range, free-text search,
 //          customer/code dropdowns, and a breakdown table of hours per customer and code.
@@ -22,6 +23,7 @@ import {
   subMonths,
 } from "date-fns";
 import TimeEntryList from "../../../components/TimeEntryList";
+import DatePicker from "../../../components/DatePicker";
 import { useEntries } from "../../../hooks/useEntries";
 
 type Filter = "all" | "billed" | "unbilled";
@@ -144,7 +146,9 @@ export default function HistoryPage() {
     const billable = filtered
       .filter((e) => e.wbsWo !== "COMP")
       .reduce((sum, e) => sum + e.hours, 0);
-    return Math.round((billable / totalHours) * 100);
+    const uniqueDays = new Set(filtered.map((e) => e.date)).size;
+    const expectedHours = uniqueDays * 7.5;
+    return Math.round((billable / expectedHours) * 100);
   }, [filtered, totalHours]);
 
   // Breakdown: hours grouped by customer
@@ -250,13 +254,7 @@ export default function HistoryPage() {
               >
                 From
               </label>
-              <input
-                type="date"
-                value={from}
-                onChange={(e) => handleFromChange(e.target.value)}
-                className="input-field"
-                style={{ width: "auto" }}
-              />
+              <DatePicker value={from} onChange={handleFromChange} />
             </div>
             <div>
               <label
@@ -268,13 +266,7 @@ export default function HistoryPage() {
               >
                 To
               </label>
-              <input
-                type="date"
-                value={to}
-                onChange={(e) => handleToChange(e.target.value)}
-                className="input-field"
-                style={{ width: "auto" }}
-              />
+              <DatePicker value={to} onChange={handleToChange} />
             </div>
             {(from || to) && (
               <button
@@ -412,7 +404,7 @@ export default function HistoryPage() {
               fontSize: "1.2rem",
               fontWeight: 700,
               color:
-                billingRate !== null && billingRate < 50
+                billingRate !== null && billingRate < 70
                   ? "var(--danger)"
                   : "var(--accent)",
             }}

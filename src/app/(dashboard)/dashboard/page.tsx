@@ -3,6 +3,7 @@
 // v2.2 - Wire updateNote to TimeEntryList
 // v2.3 - Add expandable current-week daily view and previous-week summary row
 // v2.4 - Fix terminal-prompt spacing (mb-4) and change date format to dd.MM.yy
+// v2.5 - Fix billing rate: use uniqueDays * 7.5h formula; set green threshold to 70%
 // Purpose: Dashboard page. Shows the time entry form and today's entries,
 //          plus summary stats: hours logged today, hours this week, and weekly billing rate.
 
@@ -89,7 +90,11 @@ export default function DashboardPage() {
     const billable = entries
       .filter((e) => e.date >= weekStart && e.wbsWo !== "COMP")
       .reduce((sum, e) => sum + e.hours, 0);
-    return Math.round((billable / hoursWeek) * 100);
+    const uniqueDays = new Set(
+      entries.filter((e) => e.date >= weekStart).map((e) => e.date)
+    ).size;
+    const expectedHours = uniqueDays * 7.5;
+    return Math.round((billable / expectedHours) * 100);
   }, [entries, weekStart, hoursWeek]);
 
   const entriesByDay = useMemo(() => {
@@ -171,7 +176,7 @@ export default function DashboardPage() {
                 fontSize: "1.4rem",
                 fontWeight: 700,
                 color:
-                  billingRateWeek !== null && billingRateWeek < 50
+                  billingRateWeek !== null && billingRateWeek < 70
                     ? "var(--danger)"
                     : "var(--accent)",
               }}
