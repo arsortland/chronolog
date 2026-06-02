@@ -48,7 +48,8 @@
   --color-muted: var(--text-muted);
   --color-border: var(--border);
   --color-card: var(--bg-card);
-  --font-mono: var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, monospace;
+  --font-mono:
+    var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, monospace;
 }
 
 /* ─── Base reset ──────────────────────────────────────────────────────────── */
@@ -63,7 +64,8 @@ html {
 }
 
 body {
-  font-family: var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, monospace;
+  font-family:
+    var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, monospace;
   background-color: var(--bg-primary);
   color: var(--text-primary);
   min-height: 100vh;
@@ -256,5 +258,3 @@ select.input-field option {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--accent-dim);
 }
-
-

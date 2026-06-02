@@ -12,7 +12,15 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { format, startOfWeek, endOfWeek, subWeeks, startOfMonth, endOfMonth, subMonths } from "date-fns";
+import {
+  format,
+  startOfWeek,
+  endOfWeek,
+  subWeeks,
+  startOfMonth,
+  endOfMonth,
+  subMonths,
+} from "date-fns";
 import TimeEntryList from "../../../components/TimeEntryList";
 import { useEntries } from "../../../hooks/useEntries";
 
@@ -20,7 +28,8 @@ type Filter = "all" | "billed" | "unbilled";
 type Period = "today" | "week" | "lastweek" | "month" | "lastmonth" | "custom";
 
 export default function HistoryPage() {
-  const { entries, loading, deleteEntry, toggleBilled, updateNote } = useEntries();
+  const { entries, loading, deleteEntry, toggleBilled, updateNote } =
+    useEntries();
   const [filter, setFilter] = useState<Filter>("all");
   const [period, setPeriod] = useState<Period>("custom");
   const [from, setFrom] = useState("");
@@ -31,20 +40,39 @@ export default function HistoryPage() {
   const [showBreakdown, setShowBreakdown] = useState(false);
 
   const today = format(new Date(), "yyyy-MM-dd");
-  const weekStart = format(startOfWeek(new Date(), { weekStartsOn: 1 }), "yyyy-MM-dd");
+  const weekStart = format(
+    startOfWeek(new Date(), { weekStartsOn: 1 }),
+    "yyyy-MM-dd",
+  );
   const monthStart = format(startOfMonth(new Date()), "yyyy-MM-dd");
-  const lastWeekStart = format(startOfWeek(subWeeks(new Date(), 1), { weekStartsOn: 1 }), "yyyy-MM-dd");
-  const lastWeekEnd = format(endOfWeek(subWeeks(new Date(), 1), { weekStartsOn: 1 }), "yyyy-MM-dd");
-  const lastMonthStart = format(startOfMonth(subMonths(new Date(), 1)), "yyyy-MM-dd");
-  const lastMonthEnd = format(endOfMonth(subMonths(new Date(), 1)), "yyyy-MM-dd");
+  const lastWeekStart = format(
+    startOfWeek(subWeeks(new Date(), 1), { weekStartsOn: 1 }),
+    "yyyy-MM-dd",
+  );
+  const lastWeekEnd = format(
+    endOfWeek(subWeeks(new Date(), 1), { weekStartsOn: 1 }),
+    "yyyy-MM-dd",
+  );
+  const lastMonthStart = format(
+    startOfMonth(subMonths(new Date(), 1)),
+    "yyyy-MM-dd",
+  );
+  const lastMonthEnd = format(
+    endOfMonth(subMonths(new Date(), 1)),
+    "yyyy-MM-dd",
+  );
 
   // Unique customers and codes derived from all entries (for dropdown options)
   const allCustomers = useMemo(
-    () => Array.from(new Set(entries.map((e) => e.customer).filter(Boolean))).sort(),
+    () =>
+      Array.from(
+        new Set(entries.map((e) => e.customer).filter(Boolean)),
+      ).sort(),
     [entries],
   );
   const allCodes = useMemo(
-    () => Array.from(new Set(entries.map((e) => e.wbsWo).filter(Boolean))).sort(),
+    () =>
+      Array.from(new Set(entries.map((e) => e.wbsWo).filter(Boolean))).sort(),
     [entries],
   );
 
@@ -166,7 +194,6 @@ export default function HistoryPage() {
     cursor: "pointer",
   };
 
-
   return (
     <div className="py-4">
       <h1
@@ -183,86 +210,86 @@ export default function HistoryPage() {
       <div className="card p-3 mb-4 flex flex-col gap-3">
         {/* Row 1: status + period + date range */}
         <div className="flex flex-wrap items-end gap-4">
-        {/* Status filter */}
-        <div className="flex gap-1">
-          {filterButtons.map((b) => (
-            <button
-              key={b.value}
-              onClick={() => setFilter(b.value)}
-              className={filter === b.value ? "btn-primary" : "btn-ghost"}
-              style={{ fontSize: "0.72rem", padding: "4px 10px" }}
-            >
-              {b.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Period quick-select */}
-        <div className="flex gap-1">
-          {periodButtons.map((b) => (
-            <button
-              key={b.value}
-              onClick={() => selectPeriod(b.value)}
-              className={period === b.value ? "btn-primary" : "btn-ghost"}
-              style={{ fontSize: "0.72rem", padding: "4px 10px" }}
-            >
-              {b.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Manual date range */}
-        <div className="flex items-end gap-2 ml-auto">
-          <div>
-            <label
-              style={{
-                fontSize: "0.65rem",
-                color: "var(--text-dim)",
-                display: "block",
-              }}
-            >
-              From
-            </label>
-            <input
-              type="date"
-              value={from}
-              onChange={(e) => handleFromChange(e.target.value)}
-              className="input-field"
-              style={{ width: "auto" }}
-            />
+          {/* Status filter */}
+          <div className="flex gap-1">
+            {filterButtons.map((b) => (
+              <button
+                key={b.value}
+                onClick={() => setFilter(b.value)}
+                className={filter === b.value ? "btn-primary" : "btn-ghost"}
+                style={{ fontSize: "0.72rem", padding: "4px 10px" }}
+              >
+                {b.label}
+              </button>
+            ))}
           </div>
-          <div>
-            <label
-              style={{
-                fontSize: "0.65rem",
-                color: "var(--text-dim)",
-                display: "block",
-              }}
-            >
-              To
-            </label>
-            <input
-              type="date"
-              value={to}
-              onChange={(e) => handleToChange(e.target.value)}
-              className="input-field"
-              style={{ width: "auto" }}
-            />
+
+          {/* Period quick-select */}
+          <div className="flex gap-1">
+            {periodButtons.map((b) => (
+              <button
+                key={b.value}
+                onClick={() => selectPeriod(b.value)}
+                className={period === b.value ? "btn-primary" : "btn-ghost"}
+                style={{ fontSize: "0.72rem", padding: "4px 10px" }}
+              >
+                {b.label}
+              </button>
+            ))}
           </div>
-          {(from || to) && (
-            <button
-              onClick={() => {
-                setFrom("");
-                setTo("");
-                setPeriod("custom");
-              }}
-              className="btn-ghost"
-              style={{ fontSize: "0.72rem", padding: "4px 10px" }}
-            >
-              Clear
-            </button>
-          )}
-        </div>
+
+          {/* Manual date range */}
+          <div className="flex items-end gap-2 ml-auto">
+            <div>
+              <label
+                style={{
+                  fontSize: "0.65rem",
+                  color: "var(--text-dim)",
+                  display: "block",
+                }}
+              >
+                From
+              </label>
+              <input
+                type="date"
+                value={from}
+                onChange={(e) => handleFromChange(e.target.value)}
+                className="input-field"
+                style={{ width: "auto" }}
+              />
+            </div>
+            <div>
+              <label
+                style={{
+                  fontSize: "0.65rem",
+                  color: "var(--text-dim)",
+                  display: "block",
+                }}
+              >
+                To
+              </label>
+              <input
+                type="date"
+                value={to}
+                onChange={(e) => handleToChange(e.target.value)}
+                className="input-field"
+                style={{ width: "auto" }}
+              />
+            </div>
+            {(from || to) && (
+              <button
+                onClick={() => {
+                  setFrom("");
+                  setTo("");
+                  setPeriod("custom");
+                }}
+                className="btn-ghost"
+                style={{ fontSize: "0.72rem", padding: "4px 10px" }}
+              >
+                Clear
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Row 2: search + customer + code */}
@@ -433,7 +460,11 @@ export default function HistoryPage() {
           <button
             onClick={() => setShowBreakdown((v) => !v)}
             className="btn-ghost"
-            style={{ fontSize: "0.72rem", padding: "4px 10px", marginBottom: "8px" }}
+            style={{
+              fontSize: "0.72rem",
+              padding: "4px 10px",
+              marginBottom: "8px",
+            }}
           >
             {showBreakdown ? "▾ Hide breakdown" : "▸ Show breakdown"}
           </button>
@@ -441,7 +472,10 @@ export default function HistoryPage() {
           {showBreakdown && (
             <div className="flex flex-wrap gap-4">
               {/* By customer */}
-              <div className="card p-3" style={{ minWidth: "200px", flex: "1 1 200px" }}>
+              <div
+                className="card p-3"
+                style={{ minWidth: "200px", flex: "1 1 200px" }}
+              >
                 <div
                   style={{
                     fontSize: "0.65rem",
@@ -484,7 +518,10 @@ export default function HistoryPage() {
               </div>
 
               {/* By code */}
-              <div className="card p-3" style={{ minWidth: "260px", flex: "2 1 260px" }}>
+              <div
+                className="card p-3"
+                style={{ minWidth: "260px", flex: "2 1 260px" }}
+              >
                 <div
                   style={{
                     fontSize: "0.65rem",

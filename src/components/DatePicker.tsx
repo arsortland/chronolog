@@ -24,14 +24,18 @@ import {
 } from "date-fns";
 
 interface DatePickerProps {
-  value: string;          // "yyyy-MM-dd"
+  value: string; // "yyyy-MM-dd"
   onChange: (val: string) => void;
   required?: boolean;
 }
 
 const DOW = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
 
-export default function DatePicker({ value, onChange, required }: DatePickerProps) {
+export default function DatePicker({
+  value,
+  onChange,
+  required,
+}: DatePickerProps) {
   const [open, setOpen] = useState(false);
   const [cursor, setCursor] = useState<Date>(() => {
     if (value) return parse(value, "yyyy-MM-dd", new Date());
@@ -94,17 +98,19 @@ export default function DatePicker({ value, onChange, required }: DatePickerProp
         ) : (
           <span style={{ color: "var(--text-dim)" }}>— Select date —</span>
         )}
-        <span style={{ color: "var(--text-dim)", fontSize: "0.65rem", flexShrink: 0 }}>
+        <span
+          style={{
+            color: "var(--text-dim)",
+            fontSize: "0.65rem",
+            flexShrink: 0,
+          }}
+        >
           {open ? "▴" : "▾"}
         </span>
       </button>
 
       {/* Hidden native input keeps form validation / required working */}
-      <input
-        type="hidden"
-        value={value}
-        required={required}
-      />
+      <input type="hidden" value={value} required={required} />
 
       {open && (
         <div
@@ -143,10 +149,12 @@ export default function DatePicker({ value, onChange, required }: DatePickerProp
                 borderRadius: 2,
               }}
               onMouseEnter={(e) =>
-                ((e.currentTarget as HTMLButtonElement).style.color = "var(--accent)")
+                ((e.currentTarget as HTMLButtonElement).style.color =
+                  "var(--accent)")
               }
               onMouseLeave={(e) =>
-                ((e.currentTarget as HTMLButtonElement).style.color = "var(--text-muted)")
+                ((e.currentTarget as HTMLButtonElement).style.color =
+                  "var(--text-muted)")
               }
             >
               ◂
@@ -174,10 +182,12 @@ export default function DatePicker({ value, onChange, required }: DatePickerProp
                 borderRadius: 2,
               }}
               onMouseEnter={(e) =>
-                ((e.currentTarget as HTMLButtonElement).style.color = "var(--accent)")
+                ((e.currentTarget as HTMLButtonElement).style.color =
+                  "var(--accent)")
               }
               onMouseLeave={(e) =>
-                ((e.currentTarget as HTMLButtonElement).style.color = "var(--text-muted)")
+                ((e.currentTarget as HTMLButtonElement).style.color =
+                  "var(--text-muted)")
               }
             >
               ▸
@@ -209,7 +219,13 @@ export default function DatePicker({ value, onChange, required }: DatePickerProp
           </div>
 
           {/* Day grid */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: 1 }}>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(7, 1fr)",
+              gap: 1,
+            }}
+          >
             {days.map((day) => {
               const isSelected = selected ? isSameDay(day, selected) : false;
               const isCurrentMonth = isSameMonth(day, cursor);
@@ -224,17 +240,18 @@ export default function DatePicker({ value, onChange, required }: DatePickerProp
                     background: isSelected
                       ? "var(--accent)"
                       : isTodayDay && !isSelected
-                      ? "var(--accent-glow)"
-                      : "transparent",
-                    border: isTodayDay && !isSelected
-                      ? "1px solid var(--accent-dim)"
-                      : "1px solid transparent",
+                        ? "var(--accent-glow)"
+                        : "transparent",
+                    border:
+                      isTodayDay && !isSelected
+                        ? "1px solid var(--accent-dim)"
+                        : "1px solid transparent",
                     borderRadius: 2,
                     color: isSelected
                       ? "#000"
                       : isCurrentMonth
-                      ? "var(--text-primary)"
-                      : "var(--text-dim)",
+                        ? "var(--text-primary)"
+                        : "var(--text-dim)",
                     cursor: "pointer",
                     fontSize: "0.72rem",
                     fontWeight: isSelected ? 700 : 400,

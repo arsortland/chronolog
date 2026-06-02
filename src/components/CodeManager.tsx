@@ -124,22 +124,24 @@ export default function CodeManager() {
           >
             <thead>
               <tr style={{ borderBottom: "1px solid var(--border)" }}>
-                {["Code", "Customer", "Project", "Type", "Notes", ""].map((h) => (
-                  <th
-                    key={h}
-                    style={{
-                      textAlign: "left",
-                      padding: "4px 8px",
-                      color: "var(--text-dim)",
-                      fontWeight: 600,
-                      fontSize: "0.68rem",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.06em",
-                    }}
-                  >
-                    {h}
-                  </th>
-                ))}
+                {["Code", "Customer", "Project", "Type", "Notes", ""].map(
+                  (h) => (
+                    <th
+                      key={h}
+                      style={{
+                        textAlign: "left",
+                        padding: "4px 8px",
+                        color: "var(--text-dim)",
+                        fontWeight: 600,
+                        fontSize: "0.68rem",
+                        textTransform: "uppercase",
+                        letterSpacing: "0.06em",
+                      }}
+                    >
+                      {h}
+                    </th>
+                  ),
+                )}
               </tr>
             </thead>
             <tbody>

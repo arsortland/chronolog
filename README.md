@@ -12,20 +12,20 @@ A terminal-aesthetic time tracking app for consultants. Log hours against WBS/WO
 
 ## Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Framework | [Next.js 16](https://nextjs.org) (App Router) |
-| Language | TypeScript |
-| Styling | Tailwind CSS v4 + CSS custom properties |
-| Font | JetBrains Mono |
-| Auth & Database | Firebase Auth + Firestore |
-| Date utilities | date-fns |
-| Icons | lucide-react |
-| Hosting | Vercel |
+| Layer           | Technology                                    |
+| --------------- | --------------------------------------------- |
+| Framework       | [Next.js 16](https://nextjs.org) (App Router) |
+| Language        | TypeScript                                    |
+| Styling         | Tailwind CSS v4 + CSS custom properties       |
+| Font            | JetBrains Mono                                |
+| Auth & Database | Firebase Auth + Firestore                     |
+| Date utilities  | date-fns                                      |
+| Icons           | lucide-react                                  |
+| Hosting         | Vercel                                        |
 
 ## Live App
 
-Available at **[chronolog.vercel.app](https://chronolog.vercel.app)**
+Available at **[chronologg.vercel.app](https://chronolog.vercel.app)**
 
 ## How to Use
 
@@ -34,5 +34,3 @@ Available at **[chronolog.vercel.app](https://chronolog.vercel.app)**
 3. **Log time** — On the **Dashboard**, use the form at the top to log a time entry. Select a date, pick a project code (or use COMP for compensatory time), enter hours, and optionally add a note.
 4. **Mark as billed** — Toggle the billed status on any entry once you've invoiced it.
 5. **Review history** — Go to **History** to search and filter all your entries by period or date range. The summary shows total hours and your billing rate for the active filter.
-
-

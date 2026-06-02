@@ -54,13 +54,19 @@ export default function EntryRow({
   return (
     <tr className={entry.billed ? "billed-row" : ""}>
       <td style={{ ...TD, width: "1rem", paddingRight: 0 }}>
-        <span style={{
-          color: entry.billed ? "var(--accent)" : "var(--danger)",
-          fontWeight: 700,
-          fontSize: "0.8rem",
-        }}>{'>'}</span>
+        <span
+          style={{
+            color: entry.billed ? "var(--accent)" : "var(--danger)",
+            fontWeight: 700,
+            fontSize: "0.8rem",
+          }}
+        >
+          {">"}
+        </span>
       </td>
-      <td style={{ ...TD, whiteSpace: "nowrap" }}>{format(parseISO(entry.date), "dd.MM.yyyy")}</td>
+      <td style={{ ...TD, whiteSpace: "nowrap" }}>
+        {format(parseISO(entry.date), "dd.MM.yyyy")}
+      </td>
       <td style={TD}>
         {isComp ? (
           <span style={{ color: "var(--text-dim)" }}>—</span>
@@ -139,7 +145,8 @@ export default function EntryRow({
             transition: "border-color 0.15s",
           }}
           onFocus={(e) => {
-            e.currentTarget.style.borderBottomColor = "var(--border-accent, var(--accent))";
+            e.currentTarget.style.borderBottomColor =
+              "var(--border-accent, var(--accent))";
           }}
           onBlurCapture={(e) => {
             e.currentTarget.style.borderBottomColor = "transparent";

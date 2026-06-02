@@ -9,7 +9,13 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { format, startOfWeek, endOfWeek, subWeeks, eachDayOfInterval } from "date-fns";
+import {
+  format,
+  startOfWeek,
+  endOfWeek,
+  subWeeks,
+  eachDayOfInterval,
+} from "date-fns";
 import TimeEntryForm from "../../../components/TimeEntryForm";
 import TimeEntryList from "../../../components/TimeEntryList";
 import { useEntries } from "../../../hooks/useEntries";
@@ -25,8 +31,12 @@ export default function DashboardPage() {
     startOfWeek(new Date(), { weekStartsOn: 1 }),
     "yyyy-MM-dd",
   );
-  const prevWeekStartDate = startOfWeek(subWeeks(new Date(), 1), { weekStartsOn: 1 });
-  const prevWeekEndDate = endOfWeek(subWeeks(new Date(), 1), { weekStartsOn: 1 });
+  const prevWeekStartDate = startOfWeek(subWeeks(new Date(), 1), {
+    weekStartsOn: 1,
+  });
+  const prevWeekEndDate = endOfWeek(subWeeks(new Date(), 1), {
+    weekStartsOn: 1,
+  });
   const prevWeekStart = format(prevWeekStartDate, "yyyy-MM-dd");
   const prevWeekEnd = format(prevWeekEndDate, "yyyy-MM-dd");
 
@@ -92,7 +102,8 @@ export default function DashboardPage() {
   }, [entries, currentWeekDays]);
 
   const prevWeekEntries = useMemo(
-    () => entries.filter((e) => e.date >= prevWeekStart && e.date <= prevWeekEnd),
+    () =>
+      entries.filter((e) => e.date >= prevWeekStart && e.date <= prevWeekEnd),
     [entries, prevWeekStart, prevWeekEnd],
   );
 
@@ -159,9 +170,10 @@ export default function DashboardPage() {
               style={{
                 fontSize: "1.4rem",
                 fontWeight: 700,
-                color: billingRateWeek !== null && billingRateWeek < 50
-                  ? "var(--danger)"
-                  : "var(--accent)",
+                color:
+                  billingRateWeek !== null && billingRateWeek < 50
+                    ? "var(--danger)"
+                    : "var(--accent)",
               }}
             >
               {billingRateWeek !== null ? `${billingRateWeek}%` : "—"}
@@ -183,9 +195,7 @@ export default function DashboardPage() {
 
       <div className="mt-8">
         {/* Current Week */}
-        <div className="terminal-prompt text-xs mb-4">
-          week.current()
-        </div>
+        <div className="terminal-prompt text-xs mb-4">week.current()</div>
         <div className="flex flex-col gap-1 mb-6">
           {currentWeekDays.map((day) => {
             const dateStr = format(day, "yyyy-MM-dd");
@@ -195,7 +205,11 @@ export default function DashboardPage() {
             const isToday = dateStr === today;
 
             return (
-              <div key={dateStr} className="card" style={{ overflow: "hidden" }}>
+              <div
+                key={dateStr}
+                className="card"
+                style={{ overflow: "hidden" }}
+              >
                 <button
                   onClick={() => toggleDay(dateStr)}
                   style={{
@@ -252,7 +266,9 @@ export default function DashboardPage() {
                   >
                     {dayHours > 0 ? `${dayHours.toFixed(1)}h` : "—"}
                   </span>
-                  <span style={{ color: "var(--text-dim)", fontSize: "0.72rem" }}>
+                  <span
+                    style={{ color: "var(--text-dim)", fontSize: "0.72rem" }}
+                  >
                     {isExpanded ? "▲" : "▼"}
                   </span>
                 </button>
@@ -284,9 +300,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Previous Week */}
-        <div className="terminal-prompt text-xs mb-4">
-          week.previous()
-        </div>
+        <div className="terminal-prompt text-xs mb-4">week.previous()</div>
         <div className="card" style={{ overflow: "hidden" }}>
           <button
             onClick={() => setPrevWeekExpanded((v) => !v)}
@@ -303,7 +317,8 @@ export default function DashboardPage() {
             }}
           >
             <span style={{ color: "var(--text-dim)", fontSize: "0.7rem" }}>
-              {format(prevWeekStartDate, "d MMM")} – {format(prevWeekEndDate, "d MMM")}
+              {format(prevWeekStartDate, "d MMM")} –{" "}
+              {format(prevWeekEndDate, "d MMM")}
             </span>
             <span
               style={{
@@ -316,7 +331,8 @@ export default function DashboardPage() {
               {prevWeekHours > 0 ? `${prevWeekHours.toFixed(1)}h` : "—"}
             </span>
             <span style={{ color: "var(--text-dim)", fontSize: "0.72rem" }}>
-              {prevWeekEntries.length} entr{prevWeekEntries.length === 1 ? "y" : "ies"}
+              {prevWeekEntries.length} entr
+              {prevWeekEntries.length === 1 ? "y" : "ies"}
             </span>
             <span style={{ color: "var(--text-dim)", fontSize: "0.72rem" }}>
               {prevWeekExpanded ? "▲" : "▼"}

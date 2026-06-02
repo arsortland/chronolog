@@ -49,7 +49,9 @@ export default function LoginPage() {
       await sendPasswordReset(resetEmail);
       setResetSent(true);
     } catch {
-      setResetError("Could not send reset email. Check the address and try again.");
+      setResetError(
+        "Could not send reset email. Check the address and try again.",
+      );
     } finally {
       setResetLoading(false);
     }
@@ -79,7 +81,11 @@ export default function LoginPage() {
                 </div>
                 <button
                   type="button"
-                  onClick={() => { setForgotMode(false); setResetSent(false); setResetEmail(""); }}
+                  onClick={() => {
+                    setForgotMode(false);
+                    setResetSent(false);
+                    setResetEmail("");
+                  }}
                   className="btn-ghost w-full text-xs"
                 >
                   Back to sign in
@@ -88,7 +94,8 @@ export default function LoginPage() {
             ) : (
               <form onSubmit={handleResetSubmit} className="space-y-4">
                 <p className="text-dim text-xs">
-                  Enter your account email and we&apos;ll send a password reset link.
+                  Enter your account email and we&apos;ll send a password reset
+                  link.
                 </p>
                 <div>
                   <label htmlFor="reset-email">Email</label>
@@ -117,7 +124,10 @@ export default function LoginPage() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => { setForgotMode(false); setResetError(""); }}
+                  onClick={() => {
+                    setForgotMode(false);
+                    setResetError("");
+                  }}
                   className="btn-ghost w-full text-xs"
                 >
                   Back to sign in
@@ -127,66 +137,70 @@ export default function LoginPage() {
           ) : (
             /* ── Normal sign-in panel ── */
             <>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label htmlFor="email">Email</label>
-              <input
-                id="email"
-                type="email"
-                autoComplete="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="input-field mt-1"
-                placeholder="you@example.com"
-              />
-            </div>
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div>
+                  <label htmlFor="email">Email</label>
+                  <input
+                    id="email"
+                    type="email"
+                    autoComplete="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="input-field mt-1"
+                    placeholder="you@example.com"
+                  />
+                </div>
 
-            <div>
-              <label htmlFor="password">Password</label>
-              <input
-                id="password"
-                type="password"
-                autoComplete="current-password"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="input-field mt-1"
-                placeholder="••••••••"
-              />
-            </div>
+                <div>
+                  <label htmlFor="password">Password</label>
+                  <input
+                    id="password"
+                    type="password"
+                    autoComplete="current-password"
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="input-field mt-1"
+                    placeholder="••••••••"
+                  />
+                </div>
 
-            {error && (
-              <div className="text-danger text-xs border border-danger/30 rounded p-2 bg-danger/5">
-                {error}
-              </div>
-            )}
+                {error && (
+                  <div className="text-danger text-xs border border-danger/30 rounded p-2 bg-danger/5">
+                    {error}
+                  </div>
+                )}
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="btn-primary w-full mt-2"
-            >
-              {loading ? "Signing in..." : "Sign In"}
-            </button>
-          </form>
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="btn-primary w-full mt-2"
+                >
+                  {loading ? "Signing in..." : "Sign In"}
+                </button>
+              </form>
 
-          <p className="text-center text-dim text-xs mt-4">
-            <button
-              type="button"
-              onClick={() => { setForgotMode(true); setResetEmail(email); setResetError(""); }}
-              className="text-accent hover:underline bg-transparent border-none cursor-pointer p-0"
-            >
-              Forgot password?
-            </button>
-          </p>
+              <p className="text-center text-dim text-xs mt-4">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setForgotMode(true);
+                    setResetEmail(email);
+                    setResetError("");
+                  }}
+                  className="text-accent hover:underline bg-transparent border-none cursor-pointer p-0"
+                >
+                  Forgot password?
+                </button>
+              </p>
 
-          <p className="text-center text-dim text-xs mt-3">
-            No account?{" "}
-            <Link href="/register" className="text-accent hover:underline">
-              Register
-            </Link>
-          </p>
+              <p className="text-center text-dim text-xs mt-3">
+                No account?{" "}
+                <Link href="/register" className="text-accent hover:underline">
+                  Register
+                </Link>
+              </p>
             </>
           )}
         </div>

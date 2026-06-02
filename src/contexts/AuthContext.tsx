@@ -14,7 +14,13 @@ import {
   ReactNode,
 } from "react";
 import { User } from "firebase/auth";
-import { signIn, signUp, signOut, sendPasswordReset, subscribeToAuthState } from "../lib/auth";
+import {
+  signIn,
+  signUp,
+  signOut,
+  sendPasswordReset,
+  subscribeToAuthState,
+} from "../lib/auth";
 
 interface AuthContextValue {
   user: User | null;

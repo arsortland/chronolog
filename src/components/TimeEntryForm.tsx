@@ -43,7 +43,10 @@ export default function TimeEntryForm({ codes, onAdd }: TimeEntryFormProps) {
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(e.target as Node)
+      ) {
         setCodeOpen(false);
       }
     }
@@ -144,7 +147,9 @@ export default function TimeEntryForm({ codes, onAdd }: TimeEntryFormProps) {
         </div>
       </div>
 
-      <div className={`grid gap-3 ${isComp ? "grid-cols-2" : "grid-cols-2 sm:grid-cols-4"}`}>
+      <div
+        className={`grid gap-3 ${isComp ? "grid-cols-2" : "grid-cols-2 sm:grid-cols-4"}`}
+      >
         <div>
           <label>Date</label>
           <DatePicker value={date} onChange={setDate} required />
@@ -189,121 +194,216 @@ export default function TimeEntryForm({ codes, onAdd }: TimeEntryFormProps) {
         </div>
 
         {!isComp && (
-        <div ref={dropdownRef} style={{ position: "relative" }}>
-          <label>WBS / WO Code</label>
-          <button
-            type="button"
-            onClick={() => setCodeOpen((o) => !o)}
-            className="input-field mt-1"
-            style={{
-              width: "100%",
-              textAlign: "left",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              gap: 8,
-            }}
-          >
-            {selectedCode ? (
-              <span style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap", minWidth: 0 }}>
-                <span style={{ color: "var(--text-dim)", fontSize: "0.72rem", whiteSpace: "nowrap" }}>
-                  {selectedCode.customer}
-                </span>
-                <span style={{ color: "var(--text-dim)" }}>·</span>
-                <span style={{ fontSize: "0.8rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                  {selectedCode.project}
-                </span>
-                <span style={{ color: "var(--text-dim)" }}>·</span>
-                <code style={{ color: "var(--accent)", fontSize: "0.78rem", whiteSpace: "nowrap" }}>
-                  {selectedCode.code}
-                </code>
-              </span>
-            ) : (
-              <span style={{ color: "var(--text-dim)" }}>— Select code —</span>
-            )}
-            <span style={{ color: "var(--text-dim)", fontSize: "0.65rem", flexShrink: 0 }}>
-              {codeOpen ? "▴" : "▾"}
-            </span>
-          </button>
-
-          {codeOpen && (
-            <div
+          <div ref={dropdownRef} style={{ position: "relative" }}>
+            <label>WBS / WO Code</label>
+            <button
+              type="button"
+              onClick={() => setCodeOpen((o) => !o)}
+              className="input-field mt-1"
               style={{
-                position: "absolute",
-                top: "calc(100% + 4px)",
-                left: 0,
-                minWidth: "100%",
-                width: "max-content",
-                maxWidth: "min(520px, 90vw)",
-                background: "var(--bg-secondary)",
-                border: "1px solid var(--border)",
-                borderRadius: 4,
-                zIndex: 50,
-                maxHeight: 280,
-                overflowY: "auto",
-                boxShadow: "0 4px 16px rgba(0,0,0,0.4)",
+                width: "100%",
+                textAlign: "left",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                gap: 8,
               }}
             >
-              {filteredCodes.length === 0 ? (
-                <div style={{ padding: "10px 14px", color: "var(--text-dim)", fontSize: "0.78rem" }}>
-                  No codes for this customer.
-                </div>
-              ) : (
-                filteredCodes.map((c) => (
-                  <button
-                    key={c.id}
-                    type="button"
-                    onClick={() => { setWbsWo(c.code); setCodeOpen(false); }}
+              {selectedCode ? (
+                <span
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 6,
+                    flexWrap: "wrap",
+                    minWidth: 0,
+                  }}
+                >
+                  <span
                     style={{
-                      display: "block",
-                      width: "100%",
-                      textAlign: "left",
-                      padding: "8px 14px",
-                      background: wbsWo === c.code ? "var(--bg-hover, rgba(255,255,255,0.06))" : "transparent",
-                      border: "none",
-                      borderBottom: "1px solid var(--border)",
-                      cursor: "pointer",
-                      color: "var(--text)",
-                    }}
-                    onMouseEnter={(e) => {
-                      (e.currentTarget as HTMLButtonElement).style.background =
-                        "var(--bg-hover, rgba(255,255,255,0.06))";
-                    }}
-                    onMouseLeave={(e) => {
-                      (e.currentTarget as HTMLButtonElement).style.background =
-                        wbsWo === c.code ? "var(--bg-hover, rgba(255,255,255,0.06))" : "transparent";
+                      color: "var(--text-dim)",
+                      fontSize: "0.72rem",
+                      whiteSpace: "nowrap",
                     }}
                   >
-                    <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-                      <span style={{ color: "var(--text-dim)", fontSize: "0.72rem" }}>{c.customer}</span>
-                      <span style={{ color: "var(--text-dim)", fontSize: "0.65rem" }}>·</span>
-                      <span style={{ fontSize: "0.8rem" }}>{c.project}</span>
-                      <span style={{ color: "var(--text-dim)", fontSize: "0.65rem" }}>·</span>
-                      <code style={{ color: "var(--accent)", fontSize: "0.75rem" }}>{c.code}</code>
-                      <span
+                    {selectedCode.customer}
+                  </span>
+                  <span style={{ color: "var(--text-dim)" }}>·</span>
+                  <span
+                    style={{
+                      fontSize: "0.8rem",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                    }}
+                  >
+                    {selectedCode.project}
+                  </span>
+                  <span style={{ color: "var(--text-dim)" }}>·</span>
+                  <code
+                    style={{
+                      color: "var(--accent)",
+                      fontSize: "0.78rem",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {selectedCode.code}
+                  </code>
+                </span>
+              ) : (
+                <span style={{ color: "var(--text-dim)" }}>
+                  — Select code —
+                </span>
+              )}
+              <span
+                style={{
+                  color: "var(--text-dim)",
+                  fontSize: "0.65rem",
+                  flexShrink: 0,
+                }}
+              >
+                {codeOpen ? "▴" : "▾"}
+              </span>
+            </button>
+
+            {codeOpen && (
+              <div
+                style={{
+                  position: "absolute",
+                  top: "calc(100% + 4px)",
+                  left: 0,
+                  minWidth: "100%",
+                  width: "max-content",
+                  maxWidth: "min(520px, 90vw)",
+                  background: "var(--bg-secondary)",
+                  border: "1px solid var(--border)",
+                  borderRadius: 4,
+                  zIndex: 50,
+                  maxHeight: 280,
+                  overflowY: "auto",
+                  boxShadow: "0 4px 16px rgba(0,0,0,0.4)",
+                }}
+              >
+                {filteredCodes.length === 0 ? (
+                  <div
+                    style={{
+                      padding: "10px 14px",
+                      color: "var(--text-dim)",
+                      fontSize: "0.78rem",
+                    }}
+                  >
+                    No codes for this customer.
+                  </div>
+                ) : (
+                  filteredCodes.map((c) => (
+                    <button
+                      key={c.id}
+                      type="button"
+                      onClick={() => {
+                        setWbsWo(c.code);
+                        setCodeOpen(false);
+                      }}
+                      style={{
+                        display: "block",
+                        width: "100%",
+                        textAlign: "left",
+                        padding: "8px 14px",
+                        background:
+                          wbsWo === c.code
+                            ? "var(--bg-hover, rgba(255,255,255,0.06))"
+                            : "transparent",
+                        border: "none",
+                        borderBottom: "1px solid var(--border)",
+                        cursor: "pointer",
+                        color: "var(--text)",
+                      }}
+                      onMouseEnter={(e) => {
+                        (
+                          e.currentTarget as HTMLButtonElement
+                        ).style.background =
+                          "var(--bg-hover, rgba(255,255,255,0.06))";
+                      }}
+                      onMouseLeave={(e) => {
+                        (
+                          e.currentTarget as HTMLButtonElement
+                        ).style.background =
+                          wbsWo === c.code
+                            ? "var(--bg-hover, rgba(255,255,255,0.06))"
+                            : "transparent";
+                      }}
+                    >
+                      <div
                         style={{
-                          fontSize: "0.62rem",
-                          padding: "1px 5px",
-                          border: "1px solid var(--border)",
-                          color: "var(--text-dim)",
-                          borderRadius: 2,
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 8,
+                          flexWrap: "wrap",
                         }}
                       >
-                        {c.type}
-                      </span>
-                    </div>
-                    {c.notes && (
-                      <div style={{ marginTop: 3, color: "var(--text-dim)", fontSize: "0.7rem", lineHeight: 1.4 }}>
-                        {c.notes}
+                        <span
+                          style={{
+                            color: "var(--text-dim)",
+                            fontSize: "0.72rem",
+                          }}
+                        >
+                          {c.customer}
+                        </span>
+                        <span
+                          style={{
+                            color: "var(--text-dim)",
+                            fontSize: "0.65rem",
+                          }}
+                        >
+                          ·
+                        </span>
+                        <span style={{ fontSize: "0.8rem" }}>{c.project}</span>
+                        <span
+                          style={{
+                            color: "var(--text-dim)",
+                            fontSize: "0.65rem",
+                          }}
+                        >
+                          ·
+                        </span>
+                        <code
+                          style={{
+                            color: "var(--accent)",
+                            fontSize: "0.75rem",
+                          }}
+                        >
+                          {c.code}
+                        </code>
+                        <span
+                          style={{
+                            fontSize: "0.62rem",
+                            padding: "1px 5px",
+                            border: "1px solid var(--border)",
+                            color: "var(--text-dim)",
+                            borderRadius: 2,
+                          }}
+                        >
+                          {c.type}
+                        </span>
                       </div>
-                    )}
-                  </button>
-                ))
-              )}
-            </div>
-          )}
-        </div>
+                      {c.notes && (
+                        <div
+                          style={{
+                            marginTop: 3,
+                            color: "var(--text-dim)",
+                            fontSize: "0.7rem",
+                            lineHeight: 1.4,
+                          }}
+                        >
+                          {c.notes}
+                        </div>
+                      )}
+                    </button>
+                  ))
+                )}
+              </div>
+            )}
+          </div>
         )}
       </div>
 
