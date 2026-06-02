@@ -3,7 +3,7 @@
 // v2.4 - Added inline editable note cell as the rightmost column before delete
 // v2.5 - Format date column as dd.MM.yyyy
 // v2.6 - Add leading > indicator: red when unbilled, green when billed
-// v2.7 - COMP entries show Reported/Open toggle; indicator color now reflects billed state for all rows
+// v2.8 - Apply billed-row green background to COMP (internal) entries when billed
 // Purpose: EntryRow component. Renders a single time entry as a table row.
 //          Shows date, customer, hours, description, WBS/WO, billed toggle, delete.
 //          Each copyable field has a CopyButton. Row highlights when billed.
@@ -52,7 +52,7 @@ export default function EntryRow({
   }
 
   return (
-    <tr className={!isComp && entry.billed ? "billed-row" : ""}>
+    <tr className={entry.billed ? "billed-row" : ""}>
       <td style={{ ...TD, width: "1rem", paddingRight: 0 }}>
         <span style={{
           color: entry.billed ? "var(--accent)" : "var(--danger)",
