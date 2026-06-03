@@ -30,14 +30,21 @@ export function useEntries() {
     }
     let isMounted = true;
     fetchEntries(user.uid)
-      .then((data) => { if (isMounted) setEntries(data); })
+      .then((data) => {
+        if (isMounted) setEntries(data);
+      })
       .catch((err) => {
         // Firestore emits a "cancelled" rejection when the component unmounts mid-request;
         // silence it here so it doesn't surface as an unhandled promise rejection.
-        if (err?.code !== "cancelled") console.error("useEntries fetch error:", err);
+        if (err?.code !== "cancelled")
+          console.error("useEntries fetch error:", err);
       })
-      .finally(() => { if (isMounted) setLoading(false); });
-    return () => { isMounted = false; };
+      .finally(() => {
+        if (isMounted) setLoading(false);
+      });
+    return () => {
+      isMounted = false;
+    };
   }, [user]);
 
   async function addEntry(data: Omit<Entry, "id" | "createdAt" | "updatedAt">) {

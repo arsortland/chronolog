@@ -4,6 +4,7 @@
 // v2.4 - Format group date header as dd.MM.yyyy with more spacing
 // v2.6 - Rename "Billed" header to "Status"
 // v2.7 - Add table-layout:fixed + colgroup so all date-group tables share identical column widths
+// v2.8 - Give Description col explicit 150px width (was unsized, causing 0px collapse on mobile)
 // Purpose: TimeEntryList component. Renders a list of time entries grouped by date.
 //          Each group has a date header followed by an EntryRow table.
 
@@ -63,7 +64,7 @@ export default function TimeEntryList({
           <table
             style={{
               width: "100%",
-              minWidth: 700,
+              minWidth: 842,
               borderCollapse: "collapse",
               fontSize: "0.8rem",
               tableLayout: "fixed",
@@ -75,7 +76,7 @@ export default function TimeEntryList({
               <col style={{ width: "92px" }} />
               <col style={{ width: "130px" }} />
               <col style={{ width: "60px" }} />
-              <col />
+              <col style={{ width: "150px" }} />
               <col style={{ width: "90px" }} />
               <col style={{ width: "100px" }} />
               <col style={{ width: "140px" }} />

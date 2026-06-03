@@ -4,6 +4,7 @@
 // v2.3 - Add expandable current-week daily view and previous-week summary row
 // v2.4 - Fix terminal-prompt spacing (mb-4) and change date format to dd.MM.yy
 // v2.5 - Fix billing rate: use uniqueDays * 7.5h formula; set green threshold to 70%
+// v2.6 - Change card overflow from hidden to clip so inner overflow-x-auto scroll works on mobile
 // Purpose: Dashboard page. Shows the time entry form and today's entries,
 //          plus summary stats: hours logged today, hours this week, and weekly billing rate.
 
@@ -210,11 +211,7 @@ export default function DashboardPage() {
             const isToday = dateStr === today;
 
             return (
-              <div
-                key={dateStr}
-                className="card"
-                style={{ overflow: "hidden" }}
-              >
+              <div key={dateStr} className="card" style={{ overflow: "clip" }}>
                 <button
                   onClick={() => toggleDay(dateStr)}
                   style={{
@@ -306,7 +303,7 @@ export default function DashboardPage() {
 
         {/* Previous Week */}
         <div className="terminal-prompt text-xs mb-4">week.previous()</div>
-        <div className="card" style={{ overflow: "hidden" }}>
+        <div className="card" style={{ overflow: "clip" }}>
           <button
             onClick={() => setPrevWeekExpanded((v) => !v)}
             style={{

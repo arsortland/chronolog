@@ -1,5 +1,6 @@
 // Created: 2025-01-28
-// v2.0 - Initial creation
+// v2.1 - Added isMounted guard and .catch() to prevent state updates on unmounted component
+//         and silence "Operation cancelled" Firebase errors on navigation.
 // Purpose: Custom React hook for managing WBS/WO codes in Firestore.
 //          Provides codes array, loading state, addCode, and deleteCode functions.
 
@@ -24,9 +25,21 @@ export function useCodes() {
       setLoading(false);
       return;
     }
+    let isMounted = true;
     fetchCodes(user.uid)
-      .then((data) => setCodes(data))
-      .finally(() => setLoading(false));
+      .then((data) => {
+        if (isMounted) setCodes(data);
+      })
+      .catch((err) => {
+        if (err?.code !== "cancelled")
+          console.error("useCodes fetch error:", err);
+      })
+      .finally(() => {
+        if (isMounted) setLoading(false);
+      });
+    return () => {
+      isMounted = false;
+    };
   }, [user]);
 
   async function addCode(data: Omit<Code, "id">) {
