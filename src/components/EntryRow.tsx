@@ -80,9 +80,9 @@ export default function EntryRow({
           <CopyButton value={String(entry.hours)} />
         </span>
       </td>
-      <td style={TD}>
-        <span className="flex items-center gap-1">
-          {entry.description}
+      <td style={{ ...TD, overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis", maxWidth: 0 }}>
+        <span className="flex items-center gap-1" style={{ overflow: "hidden" }}>
+          <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", minWidth: 0 }}>{entry.description}</span>
           <CopyButton value={entry.description} />
         </span>
       </td>

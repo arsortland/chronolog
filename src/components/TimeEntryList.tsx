@@ -63,6 +63,7 @@ export default function TimeEntryList({
           <table
             style={{
               width: "100%",
+              minWidth: 700,
               borderCollapse: "collapse",
               fontSize: "0.8rem",
               tableLayout: "fixed",

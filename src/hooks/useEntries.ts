@@ -1,6 +1,7 @@
 // Created: 2025-01-28
 // v2.0 - Initial creation
 // v2.1 - Added updateNote function
+// v2.2 - Add isMounted guard to prevent state updates after unmount; silence Firestore cancellation errors
 // Purpose: Custom React hook for managing time entries in Firestore.
 //          Provides entries array, loading state, addEntry, deleteEntry, toggleBilled functions.
 
@@ -27,9 +28,16 @@ export function useEntries() {
       setLoading(false);
       return;
     }
+    let isMounted = true;
     fetchEntries(user.uid)
-      .then((data) => setEntries(data))
-      .finally(() => setLoading(false));
+      .then((data) => { if (isMounted) setEntries(data); })
+      .catch((err) => {
+        // Firestore emits a "cancelled" rejection when the component unmounts mid-request;
+        // silence it here so it doesn't surface as an unhandled promise rejection.
+        if (err?.code !== "cancelled") console.error("useEntries fetch error:", err);
+      })
+      .finally(() => { if (isMounted) setLoading(false); });
+    return () => { isMounted = false; };
   }, [user]);
 
   async function addEntry(data: Omit<Entry, "id" | "createdAt" | "updatedAt">) {
