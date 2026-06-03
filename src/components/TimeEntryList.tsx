@@ -3,6 +3,7 @@
 // v2.3 - Added Note column header and onUpdateNote prop threading
 // v2.4 - Format group date header as dd.MM.yyyy with more spacing
 // v2.6 - Rename "Billed" header to "Status"
+// v2.7 - Add table-layout:fixed + colgroup so all date-group tables share identical column widths
 // Purpose: TimeEntryList component. Renders a list of time entries grouped by date.
 //          Each group has a date header followed by an EntryRow table.
 
@@ -64,8 +65,21 @@ export default function TimeEntryList({
               width: "100%",
               borderCollapse: "collapse",
               fontSize: "0.8rem",
+              tableLayout: "fixed",
             }}
           >
+            {/* indicator / Date / Customer / Hours / Description / WBS/WO / Status / Note / Delete */}
+            <colgroup>
+              <col style={{ width: "24px" }} />
+              <col style={{ width: "92px" }} />
+              <col style={{ width: "130px" }} />
+              <col style={{ width: "60px" }} />
+              <col />
+              <col style={{ width: "90px" }} />
+              <col style={{ width: "100px" }} />
+              <col style={{ width: "140px" }} />
+              <col style={{ width: "56px" }} />
+            </colgroup>
             <thead>
               <tr style={{ borderBottom: "1px solid var(--border)" }}>
                 {TABLE_HEADERS.map((h, i) => (

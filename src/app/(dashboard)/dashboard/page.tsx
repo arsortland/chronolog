@@ -91,7 +91,7 @@ export default function DashboardPage() {
       .filter((e) => e.date >= weekStart && e.wbsWo !== "COMP")
       .reduce((sum, e) => sum + e.hours, 0);
     const uniqueDays = new Set(
-      entries.filter((e) => e.date >= weekStart).map((e) => e.date)
+      entries.filter((e) => e.date >= weekStart).map((e) => e.date),
     ).size;
     const expectedHours = uniqueDays * 7.5;
     return Math.round((billable / expectedHours) * 100);
